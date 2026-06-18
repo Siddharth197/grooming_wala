@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion';
 import { MapPin, Phone, Mail, Clock } from 'lucide-react';
+import { RandomPetImage } from '../../components/RandomPetImage';
 
 export default function ContactPage() {
   const cards = [
@@ -43,24 +44,34 @@ export default function ContactPage() {
           })}
         </div>
 
-        {/* Map Placeholder */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.5 }}
-          className="glass-card mt-16 overflow-hidden p-2"
-        >
-          <div className="flex h-[400px] w-full items-center justify-center rounded-[1.25rem] border border-[rgba(123,163,123,0.15)] bg-[#f0f0e6] relative overflow-hidden">
-             {/* Decorative map elements to look like a map without an iframe */}
-             <div className="absolute inset-0 opacity-20" style={{ backgroundImage: 'radial-gradient(#1a3324 1px, transparent 1px)', backgroundSize: '20px 20px' }}></div>
-             <div className="relative text-center">
-               <MapPin size={48} className="mx-auto text-emerald drop-shadow-lg animate-bounce" />
-               <p className="mt-4 font-display text-xl font-bold text-deep">Location Map</p>
-               <p className="text-sm text-mocha">Roorkee, Uttarakhand</p>
-             </div>
-          </div>
-        </motion.div>
+        {/* Pet visual and map placeholder */}
+        <div className="mt-16 grid gap-8 lg:grid-cols-2">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.5 }}
+            className="glass-card overflow-hidden p-2"
+          >
+            <RandomPetImage caption="Visit our spa soon" className="h-[400px]" />
+          </motion.div>
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.55 }}
+            className="glass-card overflow-hidden p-2"
+          >
+            <div className="flex h-[400px] w-full items-center justify-center rounded-[1.25rem] border border-[rgba(123,163,123,0.15)] bg-[#f0f0e6] relative overflow-hidden">
+               <div className="absolute inset-0 opacity-20" style={{ backgroundImage: 'radial-gradient(#1a3324 1px, transparent 1px)', backgroundSize: '20px 20px' }}></div>
+               <div className="relative text-center">
+                 <MapPin size={48} className="mx-auto text-emerald drop-shadow-lg animate-bounce" />
+                 <p className="mt-4 font-display text-xl font-bold text-deep">Location Map</p>
+                 <p className="text-sm text-mocha">Roorkee, Uttarakhand</p>
+               </div>
+            </div>
+          </motion.div>
+        </div>
       </div>
     </div>
   );

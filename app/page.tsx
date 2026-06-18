@@ -1,5 +1,6 @@
 'use client';
 
+import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { ServiceCard } from '../components/ServiceCard';
 import { TestimonialCarousel } from '../components/TestimonialCarousel';
@@ -7,8 +8,22 @@ import { WhatsAppButton } from '../components/WhatsAppButton';
 import { servicesList, faqItems, testimonials, instagramPosts } from '../lib/data';
 import { CheckCircle, ShieldCheck, Heart } from 'lucide-react';
 import { InstagramSection } from '../components/InstagramSection';
+import { getRandomPetImage, getRandomPetImageUrls } from '../lib/petImages';
 
 export default function Home() {
+  const [heroImage, setHeroImage] = useState<{ src: string } | null>(null);
+  const [instagramPostsWithRandomImages, setInstagramPostsWithRandomImages] = useState<{ caption: string; image: string }[]>([]);
+
+  useEffect(() => {
+    setHeroImage(getRandomPetImage());
+    setInstagramPostsWithRandomImages(
+      getRandomPetImageUrls(2).map((image, index) => ({
+        caption: instagramPosts[index]?.caption ?? `Pet moment ${index + 1}`,
+        image,
+      }))
+    );
+  }, []);
+
   return (
     <div className="relative">
       <WhatsAppButton />
@@ -52,11 +67,15 @@ export default function Home() {
                 {/* Main image card */}
                 <div className="glass-card absolute inset-0 flex flex-col overflow-hidden p-3 shadow-deep hover:shadow-glow">
                   <div className="relative flex-1 overflow-hidden rounded-2xl border border-[rgba(123,163,123,0.15)]">
-                    <img
-                      src="https://images.unsplash.com/photo-1561037404-61cd46aa615b?auto=format&fit=crop&w=1200&q=80"
-                      alt="Happy groomed pet"
-                      className="h-full w-full object-cover"
-                    />
+                    {heroImage ? (
+                      <img
+                        src={heroImage.src}
+                        alt="Happy groomed pet"
+                        className="h-full w-full object-cover"
+                      />
+                    ) : (
+                      <div className="h-full w-full bg-slate-100/80" />
+                    )}
                   </div>
                   {/* Floating stat inside image */}
                   <div className="absolute bottom-10 -left-6 rounded-2xl border border-[rgba(123,163,123,0.2)] bg-white/95 p-5 shadow-glow backdrop-blur-md">
@@ -148,7 +167,7 @@ export default function Home() {
               Follow @groomingwala
             </a>
           </motion.div>
-          <InstagramSection posts={instagramPosts} />
+          <InstagramSection posts={instagramPostsWithRandomImages} />
         </div>
       </section>
     </div>

@@ -1,10 +1,11 @@
 'use client';
 
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { motion } from 'framer-motion';
 import { User, Phone, CheckCircle, Dog, MessageCircle } from 'lucide-react';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
+import { RandomPetImage } from '../../components/RandomPetImage';
 
 const servicePrices: Record<string, string> = {
   'Signature Spa': '₹2,499',
@@ -58,6 +59,8 @@ export default function BookingPage() {
     return `https://wa.me/917417909911?text=${encodeURIComponent(message)}`;
   };
 
+  const heroBookingImage = useMemo(() => <RandomPetImage caption="Book your pet's pampering" className="h-[360px] w-full" />, []);
+
   return (
     <div className="min-h-screen pt-24 pb-32">
       <div className="container mx-auto px-6 lg:px-10">
@@ -71,8 +74,11 @@ export default function BookingPage() {
           </p>
         </motion.div>
 
-        <motion.div initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.2 }} className="mx-auto mt-16 max-w-2xl">
-          <div className="glass-card gradient-border relative p-8 sm:p-12">
+        <div className="mt-16 grid gap-10 xl:grid-cols-[0.9fr_1.1fr]">
+          <motion.div initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.2 }} className="glass-card overflow-hidden">
+            {heroBookingImage}
+          </motion.div>
+          <motion.div initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.25 }} className="glass-card gradient-border relative p-8 sm:p-12">
 
             {status === 'success' ? (
               <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className="flex flex-col items-center py-12 text-center">
@@ -131,75 +137,75 @@ export default function BookingPage() {
                   </div>
                 </div>
 
-<div className="grid gap-6 sm:grid-cols-2">
-  <div className="space-y-2">
-    <label className="text-sm font-medium text-deep">Pet Name</label>
-    <div className="relative">
-      <User className="absolute left-4 top-1/2 -translate-y-1/2 text-mocha opacity-60" size={18} />
-      <input
-        type="text"
-        required
-        className="w-full bg-[rgba(255,255,255,0.8)] border border-[rgba(123,163,123,0.2)] rounded-xl py-3 pl-12 pr-4 text-deep placeholder-[rgba(74,92,80,0.6)] focus:border-emerald focus:ring-1 focus:ring-emerald outline-none transition"
-        placeholder="Buddy"
-        value={formData.petName}
-        onChange={e => setFormData({ ...formData, petName: e.target.value })}
-      />
-    </div>
-  </div>
-  <div className="space-y-2">
-    <label className="text-sm font-medium text-deep">Pet Breed</label>
-    <div className="relative">
-      <Dog className="absolute left-4 top-1/2 -translate-y-1/2 text-mocha opacity-60" size={18} />
-      <input
-        type="text"
-        required
-        className="w-full bg-[rgba(255,255,255,0.8)] border border-[rgba(123,163,123,0.2)] rounded-xl py-3 pl-12 pr-4 text-deep placeholder-[rgba(74,92,80,0.6)] focus:border-emerald focus:ring-1 focus:ring-emerald outline-none transition"
-        placeholder="Labrador"
-        value={formData.petBreed}
-        onChange={e => setFormData({ ...formData, petBreed: e.target.value })}
-      />
-    </div>
-  </div>
-  <div className="space-y-2">
-    <label className="text-sm font-medium text-deep">Pet Type</label>
-    <select
-      className="w-full bg-[rgba(255,255,255,0.8)] border border-[rgba(123,163,123,0.2)] rounded-xl py-3 px-4 text-deep focus:border-emerald focus:ring-1 focus:ring-emerald outline-none transition"
-      value={formData.petType}
-      onChange={e => setFormData({ ...formData, petType: e.target.value })}
-    >
-      <option value="Dog">Dog</option>
-      <option value="Cat">Cat</option>
-    </select>
-  </div>
-
-</div>
-<div className="space-y-2 mt-4">
-  <label className="text-sm font-medium text-deep">Address</label>
-  <div className="relative">
-    <MessageCircle className="absolute left-4 top-1/2 -translate-y-1/2 text-mocha opacity-60" size={18} />
-    <input
-      type="text"
-      required
-      className="w-full bg-[rgba(255,255,255,0.8)] border border-[rgba(123,163,123,0.2)] rounded-xl py-3 pl-12 pr-4 text-deep placeholder-[rgba(74,92,80,0.6)] focus:border-emerald focus:ring-1 focus:ring-emerald outline-none transition"
-      placeholder="123, Main St, City"
-      value={formData.address}
-      onChange={e => setFormData({ ...formData, address: e.target.value })}
-    />
-  </div>
-</div>
-
-                    <div className="space-y-2">
-                      <label className="text-sm font-medium text-deep">Preferred Date</label>
-                      <Calendar
-                        onChange={(date: Date | Date[] | null) => {
-                          const d = date instanceof Date ? date : null;
-                          const iso = d ? d.toISOString().split('T')[0] : '';
-                          setFormData({ ...formData, date: iso });
-                        }}
-                        value={formData.date ? new Date(formData.date) : null}
-                        className="rounded-lg overflow-hidden"
+                <div className="grid gap-6 sm:grid-cols-2">
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium text-deep">Pet Name</label>
+                    <div className="relative">
+                      <User className="absolute left-4 top-1/2 -translate-y-1/2 text-mocha opacity-60" size={18} />
+                      <input
+                        type="text"
+                        required
+                        className="w-full bg-[rgba(255,255,255,0.8)] border border-[rgba(123,163,123,0.2)] rounded-xl py-3 pl-12 pr-4 text-deep placeholder-[rgba(74,92,80,0.6)] focus:border-emerald focus:ring-1 focus:ring-emerald outline-none transition"
+                        placeholder="Buddy"
+                        value={formData.petName}
+                        onChange={(e) => setFormData({ ...formData, petName: e.target.value })}
                       />
                     </div>
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium text-deep">Pet Breed</label>
+                    <div className="relative">
+                      <Dog className="absolute left-4 top-1/2 -translate-y-1/2 text-mocha opacity-60" size={18} />
+                      <input
+                        type="text"
+                        required
+                        className="w-full bg-[rgba(255,255,255,0.8)] border border-[rgba(123,163,123,0.2)] rounded-xl py-3 pl-12 pr-4 text-deep placeholder-[rgba(74,92,80,0.6)] focus:border-emerald focus:ring-1 focus:ring-emerald outline-none transition"
+                        placeholder="Labrador"
+                        value={formData.petBreed}
+                        onChange={(e) => setFormData({ ...formData, petBreed: e.target.value })}
+                      />
+                    </div>
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium text-deep">Pet Type</label>
+                    <select
+                      className="w-full bg-[rgba(255,255,255,0.8)] border border-[rgba(123,163,123,0.2)] rounded-xl py-3 px-4 text-deep focus:border-emerald focus:ring-1 focus:ring-emerald outline-none transition"
+                      value={formData.petType}
+                      onChange={(e) => setFormData({ ...formData, petType: e.target.value })}
+                    >
+                      <option value="Dog">Dog</option>
+                      <option value="Cat">Cat</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div className="space-y-2 mt-4">
+                  <label className="text-sm font-medium text-deep">Address</label>
+                  <div className="relative">
+                    <MessageCircle className="absolute left-4 top-1/2 -translate-y-1/2 text-mocha opacity-60" size={18} />
+                    <input
+                      type="text"
+                      required
+                      className="w-full bg-[rgba(255,255,255,0.8)] border border-[rgba(123,163,123,0.2)] rounded-xl py-3 pl-12 pr-4 text-deep placeholder-[rgba(74,92,80,0.6)] focus:border-emerald focus:ring-1 focus:ring-emerald outline-none transition"
+                      placeholder="123, Main St, City"
+                      value={formData.address}
+                      onChange={(e) => setFormData({ ...formData, address: e.target.value })}
+                    />
+                  </div>
+                </div>
+
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-deep">Preferred Date</label>
+                  <Calendar
+                    onChange={(date: Date | Date[] | null) => {
+                      const d = date instanceof Date ? date : null;
+                      const iso = d ? d.toISOString().split('T')[0] : '';
+                      setFormData({ ...formData, date: iso });
+                    }}
+                    value={formData.date ? new Date(formData.date) : null}
+                    className="rounded-lg overflow-hidden"
+                  />
+                </div>
 
                 <div className="space-y-2">
                   <label className="text-sm font-medium text-deep">Select Service</label>
@@ -237,8 +243,8 @@ export default function BookingPage() {
                 )}
               </form>
             )}
-          </div>
-        </motion.div>
+          </motion.div>
+        </div>
       </div>
     </div>
   );

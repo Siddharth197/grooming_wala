@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion';
 import { PackageGrid } from '../../components/PackageGrid';
+import { RandomPetImage } from '../../components/RandomPetImage';
 import { ServiceCard } from '../../components/ServiceCard';
 import { FAQAccordion } from '../../components/FAQAccordion';
 import { faqItems } from '../../lib/data';
@@ -33,12 +34,17 @@ export default function ServicesPage() {
         </motion.div>
 
         {/* Services */}
-        <div className="mt-24">
-          <h2 className="font-display text-3xl font-bold text-deep">A La Carte Spa Services</h2>
-          <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {spaServices.map((svc, i) => (
-              <ServiceCard key={svc.title} index={i} {...svc} />
-            ))}
+        <div className="mt-24 grid gap-10 lg:grid-cols-[1.2fr_0.8fr]">
+          <div>
+            <h2 className="font-display text-3xl font-bold text-deep">A La Carte Spa Services</h2>
+            <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-1">
+              {spaServices.map((svc, i) => (
+                <ServiceCard key={svc.title} index={i} {...svc} />
+              ))}
+            </div>
+          </div>
+          <div className="hidden lg:block">
+            <RandomPetImage caption="Relaxed paws in style" className="h-full min-h-[28rem]" />
           </div>
         </div>
 
